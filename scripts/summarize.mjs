@@ -11,9 +11,14 @@ const RECIPIENT = 'pierpaolo.maggio84@gmail.com';
 const MIN_TRANSCRIPT_LEN = 1500;
 const STATE_PATH = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'state.json');
 
-const { APIFY_TOKEN, OPENROUTER_KEY, GMAIL_USER, GMAIL_APP_PASSWORD } = process.env;
+const APIFY_TOKEN = (process.env.APIFY_TOKEN || '').trim();
+const OPENROUTER_KEY = (process.env.OPENROUTER_KEY || '').trim();
+const GMAIL_USER = (process.env.GMAIL_USER || '').trim();
+const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || '').trim();
+
 for (const [k, v] of Object.entries({ APIFY_TOKEN, OPENROUTER_KEY, GMAIL_USER, GMAIL_APP_PASSWORD })) {
   if (!v) { console.error(`Missing env var: ${k}`); process.exit(1); }
+  console.log(`env ${k}: length=${v.length}, prefix=${v.slice(0, 6)}***`);
 }
 
 async function loadState() {
